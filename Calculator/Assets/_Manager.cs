@@ -7,17 +7,21 @@ using System;
 public class _Manager : MonoBehaviour {
 
     public Text textShow;//屏幕显示
-    private string getText = "";//获取字符的中间变量
-    private String lastNum = "";
-    
-    private string secondNum = "";
+    private String getText = "";//获取字符的中间变量
+    private String lastNum = "";   
+    private String secondNum = "";
+    private String sign = "";
+    private Double result = 0;
 
 
 
     //方法：获取点击数字并且显示到屏幕上
     private string getString (string num)
     {
-       
+       if(sign == "=")
+        {
+            clear();
+        }
         getText += num;
         secondNum += num;
         return getText;
@@ -98,6 +102,7 @@ public class _Manager : MonoBehaviour {
         lastNum = textShow.text;
         textShow.text = getString("+");
         secondNum = "";
+        sign = "+";
 
         //Debug.Log(lastNum);
     }
@@ -105,24 +110,60 @@ public class _Manager : MonoBehaviour {
     {
         lastNum = textShow.text;
         textShow.text = getString("-");
+        secondNum = "";
+        sign = "-";
     }
     public void getMultiply()
     {
         lastNum = textShow.text;
         textShow.text = getString("*");
+        secondNum = "";
+        sign = "*";
     }
     public void getDivide()
     {
         lastNum = textShow.text;
         textShow.text = getString("/");
+        secondNum = "";
+        sign = "/";
     }
     #endregion
 
     public void equal()
     {
         //Debug.Log(secondNum);
-        Double result = Convert.ToDouble(lastNum) + Convert.ToDouble(secondNum);
+        if (sign == "+")
+        {
+
+            result = Convert.ToDouble(lastNum) + Convert.ToDouble(secondNum);
+        }
+        else if (sign == "-")
+        {
+            result = Convert.ToDouble(lastNum) - Convert.ToDouble(secondNum);
+        }
+        else if (sign == "*")
+        {
+            result = Convert.ToDouble(lastNum) * Convert.ToDouble(secondNum);
+        }
+        else if (sign == "/")
+        {
+            result = Convert.ToDouble(lastNum) / Convert.ToDouble(secondNum);
+        }
+
         textShow.text = result.ToString();
+        sign = "=";
+
+
+    }
+
+    public void clear()
+    {
+        textShow.text = "";
+        getText = "";
+        lastNum = "";
+        secondNum = "";
+        sign = "";
+        result = 0;
     }
 
 }
