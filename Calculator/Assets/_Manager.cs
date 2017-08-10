@@ -7,7 +7,7 @@ using System;
 public class _Manager : MonoBehaviour {
 
     public Text textShow;//屏幕显示
-    private String getText = "";//获取字符的中间变量
+    private String temp = "";//获取字符的中间变量
     private String lastNum = "";   
     private String secondNum = "";
     private String sign = "";
@@ -18,13 +18,27 @@ public class _Manager : MonoBehaviour {
     //方法：获取点击数字并且显示到屏幕上
     private string getString (string num)
     {
-       if(sign == "=")
+
+        temp += num;
+        secondNum += num;
+        if (sign == "=")
         {
             clear();
+            temp += num;
+            secondNum += num;
+        } 
+       else if (num == "+" || num == "-" || num == "*" || num == "/")
+        {
+            sign = num;
+            lastNum = textShow.text;
+            secondNum = "";
         }
-        getText += num;
-        secondNum += num;
-        return getText;
+
+        
+        
+
+        
+        return temp;
     }
 
  
@@ -99,67 +113,69 @@ public class _Manager : MonoBehaviour {
     #region GetOpt
     public void getAdd ()
     {
-        lastNum = textShow.text;
+        //lastNum = textShow.text;
         textShow.text = getString("+");
-        secondNum = "";
-        sign = "+";
+        //secondNum = "";
+        //sign = "+";
 
         //Debug.Log(lastNum);
     }
     public void getMinus()
     {
-        lastNum = textShow.text;
+        //lastNum = textShow.text;
         textShow.text = getString("-");
-        secondNum = "";
-        sign = "-";
+        //secondNum = "";
+        //sign = "-";
     }
     public void getMultiply()
     {
-        lastNum = textShow.text;
+        //lastNum = textShow.text;
         textShow.text = getString("*");
-        secondNum = "";
-        sign = "*";
+        //secondNum = "";
+        //sign = "*";
     }
     public void getDivide()
     {
-        lastNum = textShow.text;
+        //lastNum = textShow.text;
         textShow.text = getString("/");
-        secondNum = "";
-        sign = "/";
+        //secondNum = "";
+        //sign = "/";
     }
     #endregion
-
+    //计算结果
     public void equal()
     {
-        //Debug.Log(secondNum);
-        if (sign == "+")
-        {
 
-            result = Convert.ToDouble(lastNum) + Convert.ToDouble(secondNum);
-        }
-        else if (sign == "-")
-        {
-            result = Convert.ToDouble(lastNum) - Convert.ToDouble(secondNum);
-        }
-        else if (sign == "*")
-        {
-            result = Convert.ToDouble(lastNum) * Convert.ToDouble(secondNum);
-        }
-        else if (sign == "/")
-        {
-            result = Convert.ToDouble(lastNum) / Convert.ToDouble(secondNum);
-        }
+        Debug.Log(lastNum);
+        Debug.Log(secondNum);
+        switch (sign)
+        {    
+            case "+":
+                result = Convert.ToDouble(lastNum) + Convert.ToDouble(secondNum);
+                break;
+            case "-":
+                result = Convert.ToDouble(lastNum) - Convert.ToDouble(secondNum);
+                break;
+            case "*":
+                result = Convert.ToDouble(lastNum) * Convert.ToDouble(secondNum);
+                break;
+            case "/":
+                result = Convert.ToDouble(lastNum) / Convert.ToDouble(secondNum);
+                break;
 
+        }
         textShow.text = result.ToString();
         sign = "=";
 
 
-    }
 
+
+    }
+    //清空全部数据
     public void clear()
     {
         textShow.text = "";
-        getText = "";
+        temp = "";
         lastNum = "";
         secondNum = "";
         sign = "";
