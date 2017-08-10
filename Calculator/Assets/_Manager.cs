@@ -2,21 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class _Manager : MonoBehaviour {
 
-    public Text textShow;
-    private string getText = "";
-
+    public Text textShow;//屏幕显示
+    private string getText = "";//获取字符的中间变量
+    private String lastNum = "";
     
+    private string secondNum = "";
+
+
 
     //方法：获取点击数字并且显示到屏幕上
     private string getString (string num)
     {
-        
+       
         getText += num;
+        secondNum += num;
         return getText;
     }
+
+ 
+  
     #region Get Number
     public void getNumber1 ()
     {
@@ -84,25 +92,37 @@ public class _Manager : MonoBehaviour {
 
     #endregion
 
+    #region GetOpt
     public void getAdd ()
     {
+        lastNum = textShow.text;
         textShow.text = getString("+");
+        secondNum = "";
+
+        //Debug.Log(lastNum);
     }
     public void getMinus()
     {
+        lastNum = textShow.text;
         textShow.text = getString("-");
     }
     public void getMultiply()
     {
+        lastNum = textShow.text;
         textShow.text = getString("*");
     }
     public void getDivide()
     {
+        lastNum = textShow.text;
         textShow.text = getString("/");
     }
-    void show()
-    {
+    #endregion
 
+    public void equal()
+    {
+        //Debug.Log(secondNum);
+        Double result = Convert.ToDouble(lastNum) + Convert.ToDouble(secondNum);
+        textShow.text = result.ToString();
     }
 
 }
